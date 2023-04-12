@@ -1,0 +1,44 @@
+FROM php:8.0-fpm
+
+# Install dependencies
+RUN apt-get update && apt-get install --no-install-recommends -y \
+   build-essential \
+   libpng-dev \
+   libjpeg62-turbo-dev \
+   libfreetype6-dev \
+   locales \
+   zip \
+   jpegoptim optipng pngquant gifsicle \
+   vim \
+   unzip \
+   git \
+   curl \
+   # pdo_pgsql require libpq-dev
+   libpq-dev \ 
+   # mbstring require libonig-dev
+   libonig-dev \
+   # zip require libzip-dev
+   libzip-dev
+
+# Clear cache
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Install extensions
+RUN docker-php-ext-install pdo_pgsql mbstring zip exif pcntl
+#RUN docker-php-ext-configure gd --with-gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg
+RUN docker-php-ext-install gd
+# Install gRPC ext
+RUN pecl install grpc && \
+docker-php-ext-enable grpc
+
+# Install Xdebug
+RUN pecl install xdebug \
+   && docker-php-ext-enable xdebug \
+   && echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+   && echo "xdebug.client_host = host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+
+# Clear cache
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /var/www/html
