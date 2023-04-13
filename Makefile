@@ -1,6 +1,8 @@
 DOCKER_IMAGE_NAME=php8.0-grpc
 DOCKER_IMAGE_VERSION=latest
 DOCKERFILE=dockerfile
+GRPC_SERVER_DIR=grpc-server
+DIR := ${CURDIR}
 
 .PHONY: docker-build
 docker-build:
@@ -8,5 +10,4 @@ docker-build:
 
 .PHONY: generate-proto
 generate-proto:
-	cd grpc-server/protos
-	docker run -v `pwd`:/defs namely/protoc-all -d -l php -o library/
+	docker run --rm -v $(DIR)/$(GRPC_SERVER_DIR):/defs namely/protoc-all -d protos -l php -o library/
