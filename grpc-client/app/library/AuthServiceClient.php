@@ -1,7 +1,6 @@
 <?php
 // GENERATED CODE -- DO NOT EDIT!
 
-namespace ;
 
 /**
  * Simple auth service for register and login

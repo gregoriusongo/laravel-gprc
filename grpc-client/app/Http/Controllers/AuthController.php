@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Library\AuthServiceClient;
 use LoginUserRequest;
 
 class AuthController extends Controller
@@ -12,16 +11,14 @@ class AuthController extends Controller
         return response()->json(["status" => "ok"]);
     }
 
-    public function login(){
-        $client = new AuthServiceClient('localhost/server', [
-            'credentials' => ChannelCredentials::createInsecure(),
-        ]);
+    public function login(Request $request){
+        $client = new \AuthServiceClient('localhost/server', ['credentials' => \Grpc\ChannelCredentials::createDefault()]);
     
         $loginRequest = new LoginUserRequest();
         $loginRequest->setUsername($request->input('username'));
         $loginRequest->setPassword($request->input('password'));
     
-        list($loginResponse, $status) = $client->login($loginRequest)->wait();
+        list($loginResponse, $status) = $client->LoginUser($loginRequest)->wait();
     
         return response()->json([
             'status' => $status->code,
