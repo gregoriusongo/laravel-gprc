@@ -8,8 +8,8 @@
         "php": "^7.3|^8.0",
         "ext-grpc": "*",
         "fruitcake/laravel-cors": "^2.0",
-        "google/protobuf": "^3.22",
-        "grpc/grpc": "^1.52",
+        "google/protobuf": "^3.17",
+        "grpc/grpc": "^1.38",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
@@ -28,7 +28,10 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "classmap" : [
+            "app/library"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
