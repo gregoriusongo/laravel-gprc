@@ -7,8 +7,9 @@ To run this project, make sure docker is installed on your local system, and por
 This project will have 3 containers from the docker-compose:
 - Nginx to run laravel app
 - PHP8.0-fpm with required extension
-- Node for running server app, the server use sqlite memory for it's database, which means all data will be deleted on containe restart. The auth logic is also very simple.
-
+- Node for running server app, the server use sqlite memory for it's database, which means all data will be deleted on containe restart. The auth logic is also very simple.  
+  
+The available method to run the project:  
 ## Makefile
 ```
 make run
