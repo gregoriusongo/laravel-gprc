@@ -5,9 +5,9 @@ Contain a grpc server using nodejs and a php client using laravel framework
 # How to Run
 To run this project, make sure docker is installed on your local system, and port 80 is not currently used.
 This project will have 3 containers from the docker-compose:
-- Nginx to run laravel app
+- Nginx to run laravel app / grpc client
 - PHP8.0-fpm with required extension
-- Node for running server app, the server use sqlite memory for it's database, which means all data will be deleted on containe restart. The auth logic is also very simple.  
+- Node for running grpc server app, the server use sqlite memory for it's database, which means all data will be deleted on containe restart. The auth logic is also very simple.  
   
 The available method to run the project:  
 ## Makefile
