@@ -23,24 +23,33 @@ class AuthController extends Controller
         $registerRequest->setPassword($request->input('password'));
     
         list($registerResponse, $status) = $this->client->RegisterUser($registerRequest)->wait();
-        // dd($status);
+
         return response()->json([
-            'status' => $status->code,
+            'status' => 1,
             'message' => $registerResponse->getMessage(),
         ]);
     }
 
     public function login(Request $request){
-        
         $loginRequest = new LoginUserRequest();
         $loginRequest->setUsername($request->input('username'));
         $loginRequest->setPassword($request->input('password'));
     
         list($loginResponse, $status) = $this->client->LoginUser($loginRequest)->wait();
-        // dd($status);
-        return response()->json([
-            'status' => $status->code,
-            'token' => $loginResponse->getToken(),
-        ]);
+
+        if($loginResponse->getSuccess()){
+            // login succeed
+            return response()->json([
+                'status' => 1,
+                'message' => $loginResponse->getMessage(),
+                'token' => $loginResponse->getToken(),
+            ]);
+        }else{
+            // login failed
+            return response()->json([
+                'status' => 0,
+                'message' => $loginResponse->getMessage(),
+            ]);
+        }
     }
 }
