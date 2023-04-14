@@ -16,6 +16,7 @@ var protoDescriptor = grpc.loadPackageDefinition(packageDefinition);
 
 var authService = protoDescriptor.AuthService;
 
+// db using sqlite memory
 const db = new sqlite3.Database(':memory:');
 // db migration
 db.serialize(() => {
@@ -47,7 +48,7 @@ function register(call, callback) {
       if (error) {
          callback({ message: error.message }, null);
       } else {
-         callback(null, { success: true });
+         callback(null, { message: 'Register success', success: true });
       }
    });
 }
@@ -64,7 +65,7 @@ function login(call, callback) {
       } else if (!row || row.password !== password) {
          callback(null, { success: false, message: 'Incorrect username or password' });
       } else {
-         callback(null, { success: true });
+         callback(null, { success: true, message: 'Login success', token: 'placeholder_token' });
       }
    });
 }
